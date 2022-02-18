@@ -1,24 +1,12 @@
 const number_array = [];
-let url = "http://numbersapi.com/";
+const numberOfFacts = 4;
 
-// $("#find_fact").on("submit", function(evt) {
-//     evt.preventDefault();
+async function addFacts(url) {
 
-//     number_array.forEach(ele => {
-//         const url = `http://numbersapi.com/${ele}?json`;
+    let res = await axios.get(url);
 
-//         axios
-//             .get(url)
-//             .then(res => {
-//                 console.log(res.data);
-//                 $(`#${ele}`).text(res.data.text);
-//             });
-//     });
-// });
-
-function addFacts(res) {
-    console.log(url);
     console.log(res);
+
     if (number_array.length > 1) {
         number_array.forEach(ele => {
             $(`#${ele}`).append(`<p>${res.data[ele]}</p>`);
@@ -29,7 +17,6 @@ function addFacts(res) {
             $(`#${ele}`).append(`<p>${res.data}</p>`);
         })
     }
-    return axios.get(url);
 }
 
 
@@ -52,15 +39,14 @@ $("#clear").on("click", function (evt) {
 $("#find_fact").on("submit", function (evt) {
     evt.preventDefault();
 
-    url = "http://numbersapi.com/".concat(number_array.join());
+    const url = "http://numbersapi.com/".concat(number_array.join());
 
     $("li").empty();
 
-    axios
-        .get(url)
-        .then(res => addFacts(res))
-        .then(res => addFacts(res))
-        .then(res => addFacts(res))
-        .then(res => addFacts(res));
+    console.log(url);
+
+    for (let i = 0; i < numberOfFacts;i++) {
+        addFacts(url);
+    }
 });
 
